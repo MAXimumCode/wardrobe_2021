@@ -13,8 +13,7 @@ end
 
 abort "Файлы с одеждой не найдеты в директории #{files_path}" if clothes_directory.empty?
 
-wardrobe = Wardrobe.new
-wardrobe.add_from_txt(clothes_directory)
+wardrobe = Wardrobe.add_from_txt(clothes_directory)
 
 puts 'Сколько градусов за окном? (можно с минусом)'
 puts

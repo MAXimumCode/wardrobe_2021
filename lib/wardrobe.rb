@@ -8,7 +8,7 @@ class Wardrobe
     @pick_clothes = []
   end
 
-  def add_from_txt(directory)
+  def self.add_from_txt(directory)
     directory.each do |file|
       clothes_array = File.new(file).readlines
 
@@ -19,17 +19,21 @@ class Wardrobe
 
       item = Wear.new(data)
 
-      if clothes.key?(item.cloth_type)
-        clothes[item.cloth_type] << item
+
+
+      if @clothes.key?(item.cloth_type)
+        @clothes[item.cloth_type] << item
       else
-        clothes[item.cloth_type] = Array(item)
+        @clothes[item.cloth_type] = Array(item)
       end
+
     end
+    new
   end
 
   def random_suit_for_weather(temperature)
-    clothes.each_key do |cloth_type|
-      suitable_clothes = clothes[cloth_type].select { |item| item.match_weather?(temperature) }
+    @clothes.each_key do |cloth_type|
+      suitable_clothes = @clothes[cloth_type].select { |item| item.match_weather?(temperature) }
 
       return :out_of_range if suitable_clothes.empty?
 
