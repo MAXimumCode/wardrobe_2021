@@ -7,13 +7,7 @@ files_path = Dir[File.join(__dir__, 'data', '*.txt')]
 
 abort "Файлы с одеждой не найдены в директории #{files_path}" if files_path.empty?
 
-<<<<<<< HEAD
 wardrobe = Wardrobe.add_from_txt(files_path)
-=======
-abort "Файлы с одеждой не найдеты в директории #{files_path}" if clothes_directory.empty?
-
-wardrobe = Wardrobe.add_from_txt(clothes_directory)
->>>>>>> master
 
 puts 'Сколько градусов за окном? (можно с минусом)'
 puts

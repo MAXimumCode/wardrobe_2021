@@ -3,27 +3,15 @@ require_relative 'wear'
 class Wardrobe
   attr_reader :clothes
 
-<<<<<<< HEAD
   def self.add_from_txt(directory)
     clothes_array = directory.map do |file|
       item = File.new(file).readlines
-=======
-  def initialize
-    @clothes = {}
-    @pick_clothes = []
-  end
-
-  def self.add_from_txt(directory)
-    directory.each do |file|
-      clothes_array = File.new(file).readlines
->>>>>>> master
 
       data = {}
       data[:cloth_name] = item[0]
       data[:cloth_type] = item[1]
       data[:temp_range] = item[2]
 
-<<<<<<< HEAD
       Wear.new(data)
     end
     new(clothes_array)
@@ -32,23 +20,6 @@ class Wardrobe
   def initialize(clothes)
     @clothes = clothes
   end
-=======
-
-
-      if @clothes.key?(item.cloth_type)
-        @clothes[item.cloth_type] << item
-      else
-        @clothes[item.cloth_type] = Array(item)
-      end
-
-    end
-    new
-  end
-
-  def random_suit_for_weather(temperature)
-    @clothes.each_key do |cloth_type|
-      suitable_clothes = @clothes[cloth_type].select { |item| item.match_weather?(temperature) }
->>>>>>> master
 
   def types_of_clothing
     clothes.map(&:cloth_type).uniq
