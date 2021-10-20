@@ -3,29 +3,18 @@ require_relative 'lib/wardrobe'
 puts "Программа 'Выбор одежды по погоде'"
 puts
 
-files_path = "#{File.dirname(__FILE__)}/data/"
+files_path = Dir[File.join(__dir__, 'data', '*.txt')]
 
-begin
-  clothes_directory = Dir.glob("#{files_path}*.txt")
-rescue SystemCallError
-  abort 'Папка с одеждой не найдена'
-end
+abort "Файлы с одеждой не найдены в директории #{files_path}" if files_path.empty?
 
-abort "Файлы с одеждой не найдеты в директории #{files_path}" if clothes_directory.empty?
-
-wardrobe = Wardrobe.new
-wardrobe.add_from_txt(clothes_directory)
+wardrobe = Wardrobe.add_from_txt(files_path)
 
 puts 'Сколько градусов за окном? (можно с минусом)'
 puts
 
-user_temperature = wardrobe.random_suit_for_weather(gets.to_i)
+users_temperature = gets.to_i
 
 puts 'Предлагаем сегодня надеть:'
 puts
 
-if user_temperature == :out_of_range
-  puts 'К сожалению не нашлось подходящей одежды'
-else
-  puts wardrobe.pick_clothes
-end
+puts wardrobe.clothes_picker(users_temperature)
