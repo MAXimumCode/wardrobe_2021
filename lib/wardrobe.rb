@@ -3,22 +3,26 @@ require_relative 'wear'
 class Wardrobe
   attr_reader :clothes
 
-  def self.add_from_txt(directory)
-    clothes_array = directory.map do |file|
-      item = File.new(file).readlines
+  def self.add_from_txt(array_of_path)
+    clothes_array = array_of_path.map do |file_path|
+      item = File.new(file_path).readlines
+      temp_array = item[2].delete('()').split.map(&:to_i)
 
-      data = {}
-      data[:cloth_name] = item[0]
-      data[:cloth_type] = item[1]
-      data[:temp_range] = item[2]
-
-      Wear.new(data)
+      Wear.new(
+        cloth_name: item[0].chomp,
+        cloth_type: item[1].chomp,
+        temp_range: temp_array[0]..temp_array[1]
+      )
     end
     new(clothes_array)
   end
 
   def initialize(clothes)
     @clothes = clothes
+  end
+
+  def make_range(temp)
+    Range.new(temp.delete('()').split.map(&:to_i))
   end
 
   def types_of_clothing
@@ -36,13 +40,8 @@ class Wardrobe
   end
 
   def clothes_picker(users_temperature)
-    offer_clothes = types_of_clothing.map do |type|
+    types_of_clothing.filter_map do |type|
       by_type_and_temperature(type, users_temperature).sample
-    end
-    if offer_clothes.compact.empty?
-      'К сожалению не нашлось подходящей одежды'
-    else
-      offer_clothes
     end
   end
 end
