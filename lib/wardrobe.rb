@@ -21,10 +21,6 @@ class Wardrobe
     @clothes = clothes
   end
 
-  def make_range(temp)
-    Range.new(temp.delete('()').split.map(&:to_i))
-  end
-
   def types_of_clothing
     clothes.map(&:cloth_type).uniq
   end
